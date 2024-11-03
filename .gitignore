@@ -1,0 +1,42 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# FastAPI Backend ignores
+backend/__pycache__/
+backend/*.py[cod]
+backend/venv/             # Ignore a virtual environment named `venv`
+backend/.env              # Ignore environment variable files
+
+# Websentry (Next.js Frontend) ignores
+websentry/node_modules
+websentry/.pnp
+websentry/.pnp.js
+websentry/.yarn/install-state.gz
+
+# testing
+websentry/coverage
+
+# next.js specific
+websentry/.next/
+websentry/out/
+
+# production build
+websentry/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local environment files
+websentry/.env*.local
+
+# vercel deployment
+websentry/.vercel
+
+# typescript
+websentry/*.tsbuildinfo
+websentry/next-env.d.ts

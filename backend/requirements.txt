@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+joblib
+torch
+transformers
+numpy==1.26.4
+idna
+scikit-learn==1.2.2
+dill
