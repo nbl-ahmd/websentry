@@ -1,5 +1,8 @@
 fastapi
 uvicorn
+requests
+asyncio
+time
 joblib
 torch
 transformers
