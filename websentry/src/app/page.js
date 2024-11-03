@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Shield, LinkIcon, AlertCircle, AlertTriangle, Lock, Globe, Zap, Loader2 } from 'lucide-react';
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
       setIsLoading(true);
       setError(null);
       
-      const response = await fetch('http://127.0.0.1:8000/check-url', {
+      const response = await fetch('https://websentry.onrender.com/check-url', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,14 +60,22 @@ export default function Home() {
   };
 
   const ConfidenceBar = ({ value }) => {
+    const [width, setWidth] = useState(0);
+  
+    useEffect(() => {
+      // Trigger the width change after the component mounts
+      const timeout = setTimeout(() => {
+        setWidth(value);
+      }, 100); // Small delay to ensure smooth animation
+  
+      return () => clearTimeout(timeout); // Cleanup timeout if the component unmounts
+    }, [value]);
+  
     return (
       <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
         <div 
           className={`h-full ${value >= 50 ? 'bg-green-500' : 'bg-red-500'} transition-all duration-1000 ease-out`}
-          style={{ 
-            width: `${value}%`,
-            animation: 'growWidth 1s ease-out'
-          }}
+          style={{ width: `${width}%` }}
         />
       </div>
     );
