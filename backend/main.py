@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from model import test_url, check_homograph
 from fastapi.middleware.cors import CORSMiddleware
-
+import os
+import uvicorn
 
 app = FastAPI()
 app.add_middleware(
@@ -21,8 +22,9 @@ async def check_url(request: URLRequest):
     return check_homograph(request.url)
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000, workers=1,
+    # Use the PORT environment variable, default to 8000 if not set
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port, workers=1,
         timeout_keep_alive=75,
         timeout_notify=30,
         timeout_graceful_shutdown=10,
