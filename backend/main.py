@@ -35,7 +35,7 @@ async def check_url(request: URLRequest):
 # Function to ping the keep-alive endpoint
 async def ping_keep_alive():
     KEEP_ALIVE_URL = "https://websentry.onrender.com/keep-alive"  # Replace with your actual endpoint URL
-    PING_INTERVAL = 900  # Ping every 15 minutes
+    PING_INTERVAL = 600  # Ping every 15 minutes
 
     while True:
         try:
