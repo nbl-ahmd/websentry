@@ -34,12 +34,13 @@ async def check_url(request: URLRequest):
 # Function to ping the keep-alive endpoint
 async def ping_keep_alive():
     KEEP_ALIVE_URL = "https://websentry.onrender.com/keep-alive"  # Replace with your actual endpoint URL
-    PING_INTERVAL = 300  # Ping every 5 minutes
+    PING_INTERVAL = 900  # Ping every 15 minutes
 
     while True:
         try:
-            response = requests.get(KEEP_ALIVE_URL)
-            print(f"Keep-alive ping sent: {response.status_code} - {response.json()}")
+            async with httpx.AsyncClient() as client:
+                response = await client.get(KEEP_ALIVE_URL)
+                print(f"Keep-alive ping sent: {response.status_code} - {response.json()}")
         except Exception as e:
             print(f"Error pinging keep-alive endpoint: {e}")
 
@@ -51,14 +52,5 @@ async def startup_event():
     asyncio.create_task(ping_keep_alive())
 
 if __name__ == "__main__":
-    # Use the PORT environment variable, default to 8000 if not set
     port = int(os.getenv("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port, workers=1,
-        timeout_keep_alive=75,
-        timeout_notify=30,
-        timeout_graceful_shutdown=10,
-        log_level="info",
-        limit_concurrency=10,
-        backlog=128,
-        limit_max_requests=0,
-        timeout=30)
+    uvicorn.run(app, host="0.0.0.0", port=port)
