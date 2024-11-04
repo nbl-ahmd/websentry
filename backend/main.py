@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 import os
 import uvicorn
 import requests
+import httpx
 import asyncio
 import time
 
